@@ -1,0 +1,36 @@
+<!-- Fixed navbar -->
+<div class="pos-f-t">
+  <div class="collapse" id="navbar-header">
+    <div class="container bg-inverse p-1">
+      <h3>Collapsed content</h3>
+      <p>Toggleable via the navbar brand.</p>
+    </div>
+  </div>
+  <nav class="navbar navbar-light navbar-static-top bg-faded">
+    <div class="container">
+      <button class="navbar-toggler hidden-sm-up"
+              type="button"
+              data-toggle="collapse"
+              data-target="#exCollapsingNavbar2"
+              aria-expanded="false"
+              aria-controls="exCollapsingNavbar2"
+              aria-label="Toggle navigation">
+
+      </button>
+      <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+        <a class="navbar-brand" href="#">Home</a>
+        <ul class="nav nav-pills float-md-right">
+          <li class="nav-item" *ngIf="!isAuth()">
+            <a class="nav-link" [routerLink]="['signin']" >Sign in </a>
+          </li>
+          <li class="nav-item" *ngIf="!isAuth()">
+            <a class="nav-link" [routerLink]="['signup']">Signup </a>
+          </li>
+          <li class="nav-item " *ngIf="isAuth()">
+            <a class="nav-link"  (click)="onLogout()" style="cursor: pointer">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
