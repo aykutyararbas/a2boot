@@ -3,6 +3,8 @@ import {AuthenticationService} from "../authentication.service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 
+declare var gapi: any;
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -35,6 +37,13 @@ export class HeaderComponent implements OnInit , OnDestroy{
 
   onLogout(){
     this.authenticationService.logout();
+  }
+
+  onGoogleLogout(){
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
   }
 
   ngOnDestroy(){
