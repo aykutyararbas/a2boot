@@ -36,14 +36,25 @@ export class HeaderComponent implements OnInit , OnDestroy{
   }
 
   onLogout(){
-    this.authenticationService.logout();
+    switch(this.authenticationService.provider){
+      case "fb": {
+        this.authenticationService.signoutFromFB();
+        return;
+      }
+      case "firebase": {
+        this.authenticationService.logout();
+        return;
+      }
+      case "google": {
+        this.authenticationService.signoutFromGoogle();
+        return;
+      }
+    }
+
   }
 
   onGoogleLogout(){
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
+
   }
 
   ngOnDestroy(){

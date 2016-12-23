@@ -33,4 +33,8 @@ import { WelcomehomeComponent } from './welcomehome.component';
   providers: [AuthenticationService, AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(){ }
+
+}

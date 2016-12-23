@@ -5,10 +5,10 @@ import {Router} from "@angular/router";
 import {Subject, Observable} from "rxjs";
 
 declare var firebase:  any;
-
+declare var FB: any;
+declare var gapi: any;
 @Injectable()
 export class AuthenticationService {
-
 
   constructor(private http:  Http, private router: Router) {
 
@@ -21,8 +21,8 @@ export class AuthenticationService {
   }
 
   signin(user: User){
-    firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(function (state){
-
+    firebase.auth().signInWithEmailAndPassword(user.email, user.password).then( (state) =>{
+      //this.provider="firebase";
     }).catch(function (error) {
       console.log(error);
     });
@@ -31,18 +31,64 @@ export class AuthenticationService {
 
   isAuthenticated(): Observable<boolean> {
     const subject = new Subject<boolean>();
-    firebase.auth().onAuthStateChanged(function(user){
-        if(user){
-          subject.next(true);
-        } else {
-          subject.next(false);
-        }
-    });
+    switch(""){//this.provider){
+      case "fb": {
+        FB.getLoginStatus((response)=> {
+            if (response.status === 'connected') {
+              subject.next(true);
+            } else {
+              subject.next(false);
+            }
+        });
+        break;
+      }
+      case "firebase": {
+        firebase.auth().onAuthStateChanged(function(user){
+          if(user){
+            subject.next(true);
+          } else {
+            subject.next(false);
+          }
+        });
+        break;
+      }
+      case "google": {
+        break;
+      }
+    }
+
     return subject.asObservable();
   }
 
   logout(){
     firebase.auth().signOut();
     this.router.navigate(['/signin']);
+  }
+
+  signinWithFB(){
+    FB.login((response)=> {
+      if (response.authResponse) {
+        console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me', (response)=> {
+         // this.provider="fb";
+        });
+      } else {
+        console.log('User cancelled login or did not fully authorize.');
+      }
+    });
+  }
+
+  signoutFromFB(){
+    FB.logout((response)=> {
+      // user is now logged out
+     // this.provider="";
+    });
+  }
+
+  signoutFromGoogle(){
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+     // this.provider="";
+    });
   }
 }

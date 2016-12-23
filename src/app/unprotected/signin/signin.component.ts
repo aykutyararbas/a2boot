@@ -5,7 +5,7 @@ import {AuthenticationService} from "../../shared/authentication.service";
 import {Router} from "@angular/router";
 
 declare var gapi:any;
-
+declare var FB: any;
 
 @Component({
   selector: 'app-signin',
@@ -19,28 +19,16 @@ export class SigninComponent implements OnInit {
   private myForm: FormGroup;
   private error = false;
   private errorMessage = '';
-
+  private loggedInWith: string;
   constructor(private fb: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {}
 
   onSignin() {
    this.authenticationService.signin(this.myForm.value);
   }
 
-
-   onGoogleSigninSuccess=(googleUser: any)=>{
-     var profile = googleUser.getBasicProfile();
-     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-     console.log('Name: ' + profile.getName());
-     console.log('Image URL: ' + profile.getImageUrl());
-     console.log('Email: ' + profile.getEmail());
-   }
-
-  onGoogleSigninFailure=(e)=>{
-    console.log("Google signin error");
+  onSigninWithFB(){
+    this.authenticationService.signinWithFB();
   }
-
-
-
 
   ngOnInit():any {
 
@@ -58,7 +46,24 @@ export class SigninComponent implements OnInit {
       'onsuccess': this.onGoogleSigninSuccess,
       'onfailure': this.onGoogleSigninFailure
     });
+  }
 
+  onGoogleSigninSuccess=(googleUser: any)=>{
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail());
+    this.authenticationService.provider="google";
+
+  }
+
+  onGoogleSigninFailure=(e)=>{
+    console.log("Google signin error");
+  }
+
+  fbStatusChangeCallback = (response: any) => {
+    console.log("Are we in the FB "+response);
   }
 
 }
