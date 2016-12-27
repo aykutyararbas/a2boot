@@ -7,22 +7,42 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <meta name="google-signin-client_id" content="">
+  <meta name="google-signin-client_id" content=" ">
 </head>
 <body>
-  <app-root>Loading...</app-root>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : ' ',
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
   <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+
   <script>
     // Initialize Firebase
     var config = {
-      apiKey: "AIzaSyA42PBAIHAXfCOwtngfCn8Ffszlm1Ck1Ts",
-      authDomain: "auth-37624.firebaseapp.com",
-      databaseURL: "https://auth-37624.firebaseio.com",
-      storageBucket: "auth-37624.appspot.com",
-      messagingSenderId: "1081174543142"
+      apiKey: " ",
+      authDomain: " ",
+      databaseURL: " ",
+      storageBucket: " ",
+      messagingSenderId: " "
     };
     firebase.initializeApp(config);
   </script>
   <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+
+<app-root>Loading...</app-root>
 </body>
 </html>

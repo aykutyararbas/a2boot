@@ -11,7 +11,7 @@ import { SigninComponent } from './unprotected/signin/signin.component';
 import { SignupComponent } from './unprotected/signup/signup.component';
 import { WelcomeComponent } from './unprotected/welcome.component';
 import {AuthenticationService} from "./shared/authentication.service";
-import {AuthGuard} from "./shared/authGuard";
+import {AuthGuard, AuthGuardFB, AuthGuardGoogle} from "./shared/authGuard";
 import { WelcomehomeComponent } from './welcomehome.component';
 
 @NgModule({
@@ -30,7 +30,7 @@ import { WelcomehomeComponent } from './welcomehome.component';
     HttpModule,
     routing
   ],
-  providers: [AuthenticationService, AuthGuard],
+  providers: [AuthenticationService, AuthGuard, AuthGuardFB, AuthGuardGoogle],
   bootstrap: [AppComponent]
 })
 export class AppModule {

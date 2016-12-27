@@ -10,6 +10,7 @@ export class WelcomehomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log("Welcome home in.");
   }
 
 }

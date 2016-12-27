@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import {Http} from "@angular/http";
 import {User} from "./user.interface";
 import {Router} from "@angular/router";
@@ -7,11 +7,18 @@ import {Subject, Observable} from "rxjs";
 declare var firebase:  any;
 declare var FB: any;
 declare var gapi: any;
+
 @Injectable()
 export class AuthenticationService {
-
+  static PROVIDER: string = '';
+  public authenticationNotice:  EventEmitter<string>;
+  public   auth2: any;
+  private sessionParams = {
+    'client_id': '',
+    'session_state': null
+  };
   constructor(private http:  Http, private router: Router) {
-
+    this.authenticationNotice = new  EventEmitter<string>();
   }
 
   signup(user: User){
@@ -22,7 +29,8 @@ export class AuthenticationService {
 
   signin(user: User){
     firebase.auth().signInWithEmailAndPassword(user.email, user.password).then( (state) =>{
-      //this.provider="firebase";
+      AuthenticationService.PROVIDER = "firebase";
+      this.authenticationNotice.emit("firebase");
     }).catch(function (error) {
       console.log(error);
     });
@@ -31,46 +39,52 @@ export class AuthenticationService {
 
   isAuthenticated(): Observable<boolean> {
     const subject = new Subject<boolean>();
-    switch(""){//this.provider){
-      case "fb": {
-        FB.getLoginStatus((response)=> {
-            if (response.status === 'connected') {
-              subject.next(true);
-            } else {
-              subject.next(false);
-            }
-        });
-        break;
-      }
-      case "firebase": {
-        firebase.auth().onAuthStateChanged(function(user){
+    firebase.auth().onAuthStateChanged(function(user){
           if(user){
             subject.next(true);
           } else {
             subject.next(false);
           }
-        });
-        break;
-      }
-      case "google": {
-        break;
-      }
-    }
-
+    });
     return subject.asObservable();
+  }
+
+  isAuthenticatedFb(): Observable<boolean> {
+    const subject = new Subject<boolean>();
+    FB.getLoginStatus((response)=> {
+      if (response.status === 'connected') {
+        console.log("is auth fb true");
+        subject.next(true);
+        console.log("subject set to rue");
+      } else {
+        console.log("is auth fb false");
+        subject.next(false);
+      }
+    });
+    return subject.asObservable();
+  }
+
+  isAuthenticatedGoogle(): Observable<boolean>|boolean {
+    if(this.auth2 && this.auth2.isSignedIn.get() == true){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   logout(){
     firebase.auth().signOut();
+    AuthenticationService.PROVIDER = "";
     this.router.navigate(['/signin']);
   }
 
   signinWithFB(){
     FB.login((response)=> {
       if (response.authResponse) {
-        console.log('Welcome!  Fetching your information.... ');
         FB.api('/me', (response)=> {
-         // this.provider="fb";
+          AuthenticationService.PROVIDER="fb";
+          this.authenticationNotice.emit("fb");
+          console.log("Facebook logged in");
         });
       } else {
         console.log('User cancelled login or did not fully authorize.');
@@ -80,15 +94,16 @@ export class AuthenticationService {
 
   signoutFromFB(){
     FB.logout((response)=> {
-      // user is now logged out
-     // this.provider="";
+      AuthenticationService.PROVIDER="";
+      this.router.navigate(['/signin']);
     });
   }
 
   signoutFromGoogle(){
     var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-     // this.provider="";
+    auth2.signOut().then(()=>{
+      AuthenticationService.PROVIDER="";
+      this.router.navigate(['/signin']);
     });
   }
 }

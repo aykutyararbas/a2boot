@@ -16,18 +16,44 @@ export class HeaderComponent implements OnInit , OnDestroy{
 
   private subscription: Subscription;
   constructor(private authenticationService: AuthenticationService, private router: Router) {
-    this.subscription = this.authenticationService.isAuthenticated().subscribe(
-      authStatus => {
-        this.isAuthenticated = authStatus
-        if(authStatus === true){
-            this.router.navigate(['/welcomehome']);
-        } else {
-          this.router.navigate(['/welcome']);
-        }
-      }
-    );
+    this.authenticationService.authenticationNotice.subscribe((notice)=>{
+       this.subscribeTo(notice);
+    })
   }
 
+  subscribeTo(notice: string){
+    if(this.subscription) this.subscription.unsubscribe();
+    switch(notice) {
+      case "firebase" : {
+        this.subscription = this.authenticationService.isAuthenticated().subscribe(authStatus => {
+          this.listen(authStatus);
+        });
+        break;
+      }
+      case "fb": {
+        console.log("Header subscribe to FB");
+        this.subscription = this.authenticationService.isAuthenticatedFb().subscribe(authStatus => {
+          this.listen(authStatus);
+        });
+        break;
+      }
+      case "google": {
+        this.listen(this.authenticationService.isAuthenticatedGoogle());
+        break;
+      }
+    }
+  }
+
+  listen(authStatus){
+      this.isAuthenticated = authStatus
+      if(authStatus === true){
+        console.log("Router goes home");
+        this.router.navigate(['/welcomehome']);
+      } else {
+        console.log("Router goes out");
+        this.router.navigate(['/welcome']);
+      }
+  }
   ngOnInit() {
   }
 
@@ -36,13 +62,13 @@ export class HeaderComponent implements OnInit , OnDestroy{
   }
 
   onLogout(){
-    switch(this.authenticationService.provider){
-      case "fb": {
-        this.authenticationService.signoutFromFB();
-        return;
-      }
+    switch(AuthenticationService.PROVIDER){
       case "firebase": {
         this.authenticationService.logout();
+        return;
+      }
+      case "fb": {
+        this.authenticationService.signoutFromFB();
         return;
       }
       case "google": {
@@ -50,10 +76,6 @@ export class HeaderComponent implements OnInit , OnDestroy{
         return;
       }
     }
-
-  }
-
-  onGoogleLogout(){
 
   }
 

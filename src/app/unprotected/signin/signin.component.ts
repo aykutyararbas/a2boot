@@ -54,7 +54,9 @@ export class SigninComponent implements OnInit {
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail());
-    this.authenticationService.provider="google";
+    this.authenticationService.auth2 =  gapi.auth2.getAuthInstance();
+    this.authenticationService.authenticationNotice.emit("google");
+    AuthenticationService.PROVIDER="google";
 
   }
 

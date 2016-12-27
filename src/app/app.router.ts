@@ -5,7 +5,7 @@ import {Routes,RouterModule} from '@angular/router'
 import {SigninComponent} from './unprotected/signin/signin.component'
 import {SignupComponent} from './unprotected/signup/signup.component'
 import {WelcomeComponent} from "./unprotected/welcome.component";
-import {AuthGuard} from "./shared/authGuard";
+import {AuthGuard, AuthGuardFB, AuthGuardGoogle} from "./shared/authGuard";
 import {WelcomehomeComponent} from "./welcomehome.component";
 
 const APP_ROUTER: Routes = [
@@ -13,7 +13,7 @@ const APP_ROUTER: Routes = [
   {path: 'signup', component: SignupComponent },
   {path: 'signin', component: SigninComponent},
   {path: 'welcome', component: WelcomeComponent},
-  {path: 'welcomehome', component: WelcomehomeComponent, canActivate: [AuthGuard]}
-  ]
+  {path: 'welcomehome', component: WelcomehomeComponent, canActivate: [AuthGuard, AuthGuardGoogle]}
+]
 
 export const routing = RouterModule.forRoot(APP_ROUTER)
