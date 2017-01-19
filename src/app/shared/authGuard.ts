@@ -23,7 +23,6 @@ export class AuthGuardFB implements CanActivate {
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     if(AuthenticationService.PROVIDER === '') return false;
-    console.log("Can activate with FB");
     return AuthenticationService.PROVIDER === 'fb' ? this.authenticationService.isAuthenticatedFb().first() : true;
   }
 }
@@ -37,7 +36,6 @@ export class AuthGuardGoogle implements CanActivate {
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     if(AuthenticationService.PROVIDER === '') return false;
-    console.log("Can activate with Google");
     return AuthenticationService.PROVIDER === 'google' ? this.authenticationService.isAuthenticatedGoogle() : true;
   }
 }

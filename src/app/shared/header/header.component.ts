@@ -31,7 +31,6 @@ export class HeaderComponent implements OnInit , OnDestroy{
         break;
       }
       case "fb": {
-        console.log("Header subscribe to FB");
         this.subscription = this.authenticationService.isAuthenticatedFb().subscribe(authStatus => {
           this.listen(authStatus);
         });
@@ -47,10 +46,8 @@ export class HeaderComponent implements OnInit , OnDestroy{
   listen(authStatus){
       this.isAuthenticated = authStatus
       if(authStatus === true){
-        console.log("Router goes home");
         this.router.navigate(['/welcomehome']);
       } else {
-        console.log("Router goes out");
         this.router.navigate(['/welcome']);
       }
   }

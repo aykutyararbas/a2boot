@@ -38,7 +38,7 @@ export class SigninComponent implements OnInit {
     });
 
     gapi.signin2.render('google-signin', {
-      'scope': 'profile email',
+      'scope': 'profile email photos',
       'width': 240,
       'height': 50,
       'longtitle': true,
@@ -57,6 +57,7 @@ export class SigninComponent implements OnInit {
     this.authenticationService.auth2 =  gapi.auth2.getAuthInstance();
     this.authenticationService.authenticationNotice.emit("google");
     AuthenticationService.PROVIDER="google";
+    this.router.navigate(['/welcomehome']);
 
   }
 

@@ -14,7 +14,7 @@ export class AuthenticationService {
   public authenticationNotice:  EventEmitter<string>;
   public   auth2: any;
   private sessionParams = {
-    'client_id': '',
+    'client_id': '676648873488-1qsv7oi89n0f5rqqk6asl6j25hlle2rc.apps.googleusercontent.com',
     'session_state': null
   };
   constructor(private http:  Http, private router: Router) {
@@ -53,11 +53,8 @@ export class AuthenticationService {
     const subject = new Subject<boolean>();
     FB.getLoginStatus((response)=> {
       if (response.status === 'connected') {
-        console.log("is auth fb true");
-        subject.next(true);
-        console.log("subject set to rue");
+         subject.next(true);
       } else {
-        console.log("is auth fb false");
         subject.next(false);
       }
     });
@@ -81,15 +78,17 @@ export class AuthenticationService {
   signinWithFB(){
     FB.login((response)=> {
       if (response.authResponse) {
-        FB.api('/me', (response)=> {
+        sessionStorage.setItem("respose", JSON.stringify(response.authResponse))
+       //  accessToken, expiresIn,  grantedScopes , signedRequest, userID
+
+        FB.api('/me/permissions', (response)=> {
           AuthenticationService.PROVIDER="fb";
           this.authenticationNotice.emit("fb");
-          console.log("Facebook logged in");
         });
       } else {
         console.log('User cancelled login or did not fully authorize.');
       }
-    });
+    }, {scope: 'user_photos', return_scopes: true});
   }
 
   signoutFromFB(){

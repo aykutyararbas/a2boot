@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Atoms */
+.bt-1 {
+  border-top: 1px solid #ccc !important;
+  padding-top: .25rem !important;
+}

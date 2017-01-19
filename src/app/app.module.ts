@@ -13,6 +13,9 @@ import { WelcomeComponent } from './unprotected/welcome.component';
 import {AuthenticationService} from "./shared/authentication.service";
 import {AuthGuard, AuthGuardFB, AuthGuardGoogle} from "./shared/authGuard";
 import { WelcomehomeComponent } from './welcomehome.component';
+import { UxComponent } from './util/ux/ux.component';
+import { LoginComponent } from './util/ux/login/login.component';
+import { FormComponent } from './util/ux/form/form.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { WelcomehomeComponent } from './welcomehome.component';
     SignupComponent,
     WelcomeComponent,
     WelcomehomeComponent,
+    UxComponent,
+    LoginComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
