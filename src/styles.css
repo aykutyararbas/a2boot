@@ -10,3 +10,23 @@ input:-webkit-autofill:active {
   border-top: 1px solid #ccc !important;
   padding-top: .25rem !important;
 }
+
+form.a-edit-form {
+
+}
+
+form.a-readonly-form {
+
+}
+
+.a-label {
+  float: left;
+  margin-bottom: 0em !important;
+  padding-right: 1em;
+}
+
+.a-label-message {
+  float: left;
+  margin-top: 0.25em !important;
+  font-size: small;
+}
