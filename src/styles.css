@@ -11,13 +11,6 @@ input:-webkit-autofill:active {
   padding-top: .25rem !important;
 }
 
-form.a-edit-form {
-
-}
-
-form.a-readonly-form {
-
-}
 
 .a-label {
   float: left;

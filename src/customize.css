@@ -1,0 +1,12 @@
+/* Customizable styles */
+form.a-edit-form {
+  background-color: rgb(250, 250, 250);
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  border-bottom: solid 0.25em #cccccc;
+  border-right: solid 0.1em #cccccc;
+}
+
+form.a-readonly-form {
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  border: solid 1px #f2f2f2;
+}

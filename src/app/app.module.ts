@@ -16,6 +16,10 @@ import { WelcomehomeComponent } from './welcomehome.component';
 import { UxComponent } from './util/ux/ux.component';
 import { LoginComponent } from './util/ux/login/login.component';
 import { FormComponent } from './util/ux/form/form.component';
+import { ModalComponent } from './util/ux/modal/modal.component';
+import { CardsComponent } from './util/ux/cards/cards.component';
+import { ButtonsComponent } from './util/ux/buttons/buttons.component';
+import { CollapseComponent } from './util/ux/collapse/collapse.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,11 @@ import { FormComponent } from './util/ux/form/form.component';
     WelcomehomeComponent,
     UxComponent,
     LoginComponent,
-    FormComponent
+    FormComponent,
+    ModalComponent,
+    CardsComponent,
+    ButtonsComponent,
+    CollapseComponent
   ],
   imports: [
     BrowserModule,

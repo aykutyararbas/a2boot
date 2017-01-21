@@ -19,6 +19,7 @@
       "mobile": false,
       "styles": [
         "styles.css",
+        "customize.css",
         "../node_modules/tether/dist/css/tether.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "../node_modules/font-awesome/css/font-awesome.min.css"
